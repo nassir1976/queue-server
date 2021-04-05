@@ -1,0 +1,26 @@
+{
+  "name": "queue-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "acme.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nassir1976/queue-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nassir1976/queue-server/issues"
+  },
+  "homepage": "https://github.com/nassir1976/queue-server#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "faker": "^5.5.2",
+    "socket.io": "^4.0.1",
+    "socket.io-client": "^4.0.1"
+  }
+}
