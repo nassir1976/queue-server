@@ -1,37 +1,35 @@
 
 'use strict';
+
 const io = require('socket.io-client');
 
-const hostURL = 'http://localhost:3000/caps';
-const socket = io.connect(hostURL);
-const events = require('../event.js');
+const capsURL = 'http://localhost:3000/caps';
 
 
-socket.on('pickup', payload => {
-    setTimeout(() => {
-      events.driverPickup(payload);
-      socket.emit('in-transit', payload);
-    }, 1500)
-  });
+const socket = io.connect(capsURL);
 
 
-socket.on('pickup', payload => {
+socket.emit('getAll');
+
+socket.on('pickup', (payload) => {
+
   setTimeout(() => {
-    events.driverDelivered(payload);
+    socket.emit('received', payload);
+    console.log(`Picking up ${payload.order.orderId}`);
+    payload.event = 'in-transit';
+    socket.emit('in-transit', payload);
+  }, 1500);
+
+});
+
+socket.on('in-transit', (payload) => {
+  
+  setTimeout(() => {
+    socket.emit('received', payload);
+    payload.event = 'delivered';
     socket.emit('delivered', payload);
-  }, 4000)
-});
+  }, 3000);
 
-socket.on('packageReady', payload => {
-
-  console.log(payload);
-  socket.emit('received', payload);
-});
-socket.on('getMessages', () => {
-  for (let key in orderQueue.sent) {
-
-    socket.emit('packageReady', orderQueue.sent[key]);
-  }
 });
 
 console.log('DRIVER LIVE');
